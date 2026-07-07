@@ -20,8 +20,6 @@ on-button-left=dismiss
 on-button-middle=none
 on-button-right=dismiss-all
 
-# BEGIN PYWAL
-border-color=#0168E5
+border-color=#005BE2
 background-color=#090404
 text-color=#c1c0c0
-# END PYWAL
