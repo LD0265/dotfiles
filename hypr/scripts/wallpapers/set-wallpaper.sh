@@ -1,5 +1,11 @@
 #!/bin/bash
-set -eu
+#set -eu
+set -euxo pipefail
+
+LOGFILE="$HOME/wallpaper.log"
+exec > >(tee -a "$LOGFILE") 2>&1
+
+echo "===== $(date) ====="
 
 WALL_DIR="$HOME/.config/wallpapers"
 
@@ -17,14 +23,14 @@ SELECTED_FILE=$(echo "$FILE_LIST" | (pgrep wofi || wofi --dmenu --prompt "Select
 
 WALL="$WALL_DIR/$SELECTED_FILE"
 echo "Setting wallpaper: $SELECTED_FILE"
-awww img "$WALL" --transition-type none
-# --transition-step 30
-# --transition-type center
+
+awww img "$WALL" --transition-type wipe --transition-angle 225 --transition-fps 120
+
 echo "Wallpaper set successfully"
 
 if command -v wal >/dev/null 2>&1; then
     echo "Applying pywal colors..."
-    wal -i "$WALL"
+    wal -i "$WALL" -n
     pkill -SIGWINCH fish
     echo "Pywal applied successfully"
     
